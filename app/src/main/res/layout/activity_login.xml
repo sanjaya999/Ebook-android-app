@@ -72,4 +72,28 @@
         app:layout_constraintTop_toBottomOf="@id/password" />
 
 
+    <TextView
+        android:id="@+id/dontHave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Dont have an account?"
+        android:textColor="#888888"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginButton" />
+
+    <TextView
+        android:id="@+id/signUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Sign up"
+        android:textColor="@color/ebookOrange"
+        app:layout_constraintStart_toEndOf="@id/dontHave"
+        app:layout_constraintTop_toBottomOf="@id/loginButton" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.ebook.np;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -8,17 +9,36 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.ebook.np.session.SessionManager;
+
 public class SessionCheck extends AppCompatActivity {
+
+    private SessionManager sessionManager;
+    private static final String TAG = "SessionCheck";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_session_check);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+       sessionManager = new SessionManager(this);
+
+       checkLoginStatus();
+
+
+
+    }
+
+    public void checkLoginStatus(){
+        Intent intent;
+
+        if (sessionManager.isLoggedIn()){
+            intent = new Intent(this , BookRecyclerViewActivity.class);
+            startActivity(intent);
+            finish();
+        }else {
+            intent = new Intent(this , LoginActivity.class);
+            startActivity(intent);
+        }
     }
 }
