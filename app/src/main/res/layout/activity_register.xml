@@ -28,8 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="Tap to upload profile picture"
-            android:textColor="#888888"
+            android:text="Register"
+            android:textColor="@color/ebookOrange"
             android:textSize="12sp" />
 
         <EditText
