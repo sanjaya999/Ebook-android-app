@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ebook.np.api.Api;
 import com.ebook.np.api.ApiService;
+import com.ebook.np.db.Bookdb;
 import com.ebook.np.dto.Response.BookResponse;
 import com.ebook.np.model.Books;
 import com.ebook.np.session.SessionManager;
@@ -48,6 +49,7 @@ public class BookRecyclerViewActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private TabLayout tabLayout;
     private String profileImageUrl;
+    private BookAdapter bookAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +57,10 @@ public class BookRecyclerViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_book_recycler_view);
         sessionManager = new SessionManager(this);
         profileImageUrl = sessionManager.getUserProfileUrl();
-
+        bookAdapter = new BookAdapter(bookList, this);
         toolbar();
-        getBookList();
+        getBooks();
+
 
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -96,6 +99,10 @@ public class BookRecyclerViewActivity extends AppCompatActivity {
                         bookList.clear();
                         bookList.addAll(bookResponse.getData());
 
+                        Bookdb bookdb = new Bookdb(BookRecyclerViewActivity.this);
+                        for (Books book : bookResponse.getData()) {
+                            bookdb.insertBook(book);
+                        }
                         // Notify adapter that data has changed
                         adapter.notifyDataSetChanged();
 
@@ -178,7 +185,34 @@ public class BookRecyclerViewActivity extends AppCompatActivity {
             sessionManager.logoutUser();
             Intent i = new Intent(BookRecyclerViewActivity.this , LoginActivity.class);
             startActivity(i);
+            finish();
+        } else if (id == R.id.search) {
+            Intent i = new Intent(BookRecyclerViewActivity.this , SearchActivity.class);
+            startActivity(i);
+            Toast.makeText(this , "search" , Toast.LENGTH_SHORT).show();
+        } else if (id == android.R.id.home) {
+            finish();
+
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    private void getBooks() {
+        // Create a Bookdb instance to access local data
+        Bookdb bookdb = new Bookdb(BookRecyclerViewActivity.this);
+
+        // Fetch books from local database
+        ArrayList<Books> localBooks = bookdb.getAllBooks();
+
+        // If books are available in the local database, display them
+        if (localBooks != null && !localBooks.isEmpty()) {
+            bookList.clear();
+            bookList.addAll(localBooks);
+        } else {
+            getBookList();
+        }
+    }
+
 }

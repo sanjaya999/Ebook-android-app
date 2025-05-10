@@ -11,6 +11,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -22,5 +23,8 @@ public interface ApiService {
 
     @POST("api/v1/user/register")
     Call<RegisterResponse> register(@Body RegisterRequest registerRequest);
+
+    @GET("api/v1/user/search")
+    Call<BookResponse> searchBooks( @Query("searchTerm") String searchTerm);
 
 }

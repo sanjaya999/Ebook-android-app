@@ -84,5 +84,13 @@ public class Books {
     public boolean isApproved() {
         return approved;
     }
+    public Books(String id, String bookName, String description, String bookImage, String bookFile) {
+        this.id = id;
+        this.bookName = bookName;
+        this.description = description;
+        this.bookImage = bookImage;
+        this.bookFile = bookFile;
+    }
+
 
 }
