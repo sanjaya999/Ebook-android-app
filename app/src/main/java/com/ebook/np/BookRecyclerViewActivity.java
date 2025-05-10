@@ -138,38 +138,6 @@ public class BookRecyclerViewActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        MenuItem profileMenuItem = menu.findItem(R.id.profile);
-
-        if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
-            Picasso.get()
-                    .load(profileImageUrl)
-                    .resize(96, 96) // Optional: Resize the image (adjust size as needed)
-                    .centerCrop()   // Optional: Crop the image
-                    .into(new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            // Convert the loaded Bitmap to a Drawable
-                            Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-                            // Set the loaded drawable as the icon for the menu item
-                            profileMenuItem.setIcon(drawable);
-                        }
-
-                        @Override
-                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                            // Handle failure, e.g., set an error icon or placeholder
-                            profileMenuItem.setIcon(R.drawable.ic_profile_placeholder);
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-                            // Set a placeholder while loading (optional)
-                            profileMenuItem.setIcon(placeHolderDrawable);
-                        }
-                    });
-        } else {
-            // If profileImageUrl is null or empty, set a default icon
-            profileMenuItem.setIcon(R.drawable.ic_profile_placeholder);
-        }
 
         return true;
     }
